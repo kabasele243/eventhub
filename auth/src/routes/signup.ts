@@ -1,49 +1,42 @@
-import mongoose from 'mongoose';
-import { Password } from '../services/password';
+import express, { Request, Response } from 'express';
+import { body, validationResult } from 'express-validator';
+import { User } from '../models/user';
+import { RequestValidationError } from '../errors/request-validation-error';
+import { BadRequestError } from '../errors/bad-request-error';
 
-// An interface that describes the properties
-// that are requried to create a new User
-interface UserAttrs {
-  email: string;
-  password: string;
-}
+const router = express.Router();
 
-// An interface that describes the properties
-// that a User Model has
-interface UserModel extends mongoose.Model<UserDoc> {
-  build(attrs: UserAttrs): UserDoc;
-}
+router.post(
+  '/api/users/signup',
+  [
+    body('email')
+      .isEmail()
+      .withMessage('Email must be valid'),
+    body('password')
+      .trim()
+      .isLength({ min: 4, max: 20 })
+      .withMessage('Password must be between 4 and 20 characters')
+  ],
+  async (req: Request, res: Response) => {
+    const errors = validationResult(req);
 
-// An interface that describes the properties
-// that a User Document has
-interface UserDoc extends mongoose.Document {
-  email: string;
-  password: string;
-}
+    if (!errors.isEmpty()) {
+      throw new RequestValidationError(errors.array());
+    }
 
-const userSchema = new mongoose.Schema({
-  email: {
-    type: String,
-    required: true
-  },
-  password: {
-    type: String,
-    required: true
+    const { email, password } = req.body;
+
+    const existingUser = await User.findOne({ email });
+
+    if (existingUser) {
+      throw new BadRequestError('Email in use');
+    }
+
+    const user = User.build({ email, password });
+    await user.save();
+
+    res.status(201).send(user);
   }
-});
+);
 
-userSchema.pre('save', async function(done) {
-  if (this.isModified('password')) {
-    const hashed = await Password.toHash(this.get('password'));
-    this.set('password', hashed);
-  }
-  done();
-});
-
-userSchema.statics.build = (attrs: UserAttrs) => {
-  return new User(attrs);
-};
-
-const User = mongoose.model<UserDoc, UserModel>('User', userSchema);
-
-export { User };
+export { router as signupRouter };
