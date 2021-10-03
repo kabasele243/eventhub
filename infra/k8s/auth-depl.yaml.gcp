@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: auth
-          image: 9933759/auth
+          image: us.gcr.io/eventhub-dev-327319/auth
           env:
             - name: JWT_KEY
               valueFrom:

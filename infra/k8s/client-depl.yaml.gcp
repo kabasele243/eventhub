@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
         - name: client
-          image: 9933759/client
+          image: us.gcr.io/eventhub-dev-327319/client
 ---
 apiVersion: v1
 kind: Service

@@ -5,10 +5,10 @@ deploy:
     manifests:
       - ./infra/k8s/*
 build:
-  local:
-    push: false
+  googleCloudBuild:
+    projectId: eventhub-dev-327319
   artifacts:
-    - image: 9933759/auth
+    - image: us.gcr.io/eventhub-dev-327319/auth
       context: auth
       docker:
         dockerfile: Dockerfile
@@ -16,7 +16,7 @@ build:
         manual:
           - src: "src/**/*.ts"
             dest: .
-    - image: 9933759/client
+    - image: us.gcr.io/eventhub-dev-327319/client
       context: client
       docker:
         dockerfile: Dockerfile
