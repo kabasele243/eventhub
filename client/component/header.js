@@ -16,11 +16,11 @@ const Header = ({ currentUser }) => {
         </li>
       );
     }); 
-
+    console.log('Je suis la')
   return (
     <nav className="navbar navbar-light bg-light">
       <Link href="/">
-        <a className="navbar-brand">EventHub</a>
+        <a className="navbar-brand">EventHub Ticket</a>
       </Link>
 
       <div className="d-flex justify-content-end">
