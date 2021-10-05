@@ -18,7 +18,7 @@ const Header = ({ currentUser }) => {
     }); 
   
   return (
-    <nav className="navbar navbar-light bg-light">
+    <nav className="navbar navbar-light bg-light m-10">
       <Link href="/">
         <a className="navbar-brand">EventHub Ticket</a>
       </Link>
