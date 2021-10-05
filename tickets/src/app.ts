@@ -3,6 +3,7 @@ import 'express-async-errors';
 import { json } from "body-parser";
 import cookieSession from 'cookie-session';
 import { errorHandler, NotFoundError } from "@eventhubfk/common";
+import { createTicketRouter } from "./routes/new";
 
 
 
@@ -18,6 +19,7 @@ app.use(
   })
 );
 
+app.use(createTicketRouter)
 
 app.all("*", async (req, res) => {
   throw new NotFoundError();
