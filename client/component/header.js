@@ -20,7 +20,7 @@ const Header = ({ currentUser }) => {
   return (
     <nav className="navbar navbar-light bg-light m-10">
       <Link href="/" >
-        <a className="navbar-brand nav-item">EventHub Ticket</a>
+        <a className="navbar-brand">EventHub Ticket</a>
       </Link>
 
       <div className="d-flex justify-content-end">
