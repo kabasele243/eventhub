@@ -3,8 +3,10 @@ import Router from 'next/router';
 import useRequest from '../../hooks/use-request'
 
 const SignIn = () => {
+  
   const [ email, setEmail ] = useState('');
   const [ password, setPassword ] = useState('');
+  console.log(email, password)
   const { doRequest, errors } = useRequest({
     url: '/api/users/signin',
     method: 'post',

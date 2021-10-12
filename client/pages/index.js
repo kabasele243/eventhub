@@ -1,7 +1,6 @@
 import buildClient from '../api/build-client';
 
 const LandingPage = ({ data }) => {
-  
   let currentUser = data.currentUser;
   return (
     currentUser ? (
