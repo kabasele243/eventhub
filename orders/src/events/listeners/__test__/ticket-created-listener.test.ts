@@ -1,6 +1,6 @@
 import { Message } from 'node-nats-streaming';
 import mongoose from 'mongoose';
-import { TicketCreatedEvent } from '@cygnetops/common';
+import { TicketCreatedEvent } from '@eventhubfk/common';
 import { TicketCreatedListener } from '../ticket-created-listener';
 import { natsWrapper } from '../../../nats-wrapper';
 import { Ticket } from '../../../models/ticket';
@@ -11,9 +11,9 @@ const setup = async () => {
 
   // create a fake data event
   const data: TicketCreatedEvent['data'] = {
-    version: 0,
     id: new mongoose.Types.ObjectId().toHexString(),
     title: 'concert',
+    version: 0,
     price: 10,
     userId: new mongoose.Types.ObjectId().toHexString(),
   };
@@ -42,6 +42,11 @@ it('creates and saves a ticket', async () => {
 });
 
 it('acks the message', async () => {
+  const { data, listener, msg } = await setup();
+
   // call the onMessage function with the data object + message object
+  await listener.onMessage(data, msg);
+
   // write assertions to make sure ack function is called
+  expect(msg.ack).toHaveBeenCalled();
 });
