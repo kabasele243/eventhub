@@ -43,5 +43,6 @@ Requirements:
 ### Managing services
 
 ## Overall Architecture
+![Screen Shot 2021-10-14 at 12 29 37 AM](https://user-images.githubusercontent.com/52716036/137252300-b8a02800-3d1f-4d60-a942-b9aa02583bb4.png)
 
 
