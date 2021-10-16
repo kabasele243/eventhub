@@ -10,8 +10,9 @@ declare global {
 
 jest.mock('../nats-wrapper');
 
-let mongo: any;
+process.env.STRIPE_KEY = 'sk_test_51INONCLhDuYD2o59kJE6rtaDe3PYCSqFLr8ZNHo9VsOBpAmalSflL08nepSsDJOoNs0CTnaJk5JqtYPNjxU9jhuV00f39KEWNg';
 
+let mongo: any;
 beforeAll(async () => {
   process.env.JWT_KEY = 'asdfasdf';
   process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0';
@@ -20,7 +21,6 @@ beforeAll(async () => {
   const mongoUri = mongo.getUri();
 
   await mongoose.connect(mongoUri);
-
 });
 
 beforeEach(async () => {
