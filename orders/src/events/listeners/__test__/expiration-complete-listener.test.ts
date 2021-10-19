@@ -7,7 +7,7 @@ import { Order } from '../../../models/order';
 import { Ticket } from '../../../models/ticket';
 
 const setup = async () => {
-  const listener = new ExpirationCompleteListener(natsWrapper.client);
+  const listener = await new ExpirationCompleteListener(natsWrapper.client);
 
   const ticket = Ticket.build({
     id: new mongoose.Types.ObjectId().toHexString(),
@@ -44,17 +44,22 @@ it('updates the order status to cancelled', async () => {
   expect(updatedOrder!.status).toEqual(OrderStatus.Cancelled);
 });
 
-// it('emit an OrderCancelled event', async () => {
+// it.only('emit an OrderCancelled event', async () => {
 //   const { listener, order, data, msg } = await setup();
 
 //   await listener.onMessage(data, msg);
 
 //   expect(natsWrapper.client.publish).toHaveBeenCalled();
-
+  
 //   const eventData = JSON.parse(
 //     (natsWrapper.client.publish as jest.Mock).mock.calls[0][1]
 //   );
-//   expect(eventData.id).toEqual(order.id);
+//   console.log(data.orderId)
+//   console.log(eventData.id)
+//   console.log(order.id)
+
+//   expect(data.id).toEqual(order.id);
+//   // expect(eventData.id).toEqual(order.id);
 // });
 
 it('ack the message', async () => {
